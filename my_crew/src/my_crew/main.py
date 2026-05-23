@@ -4,7 +4,7 @@ import warnings
 
 from datetime import datetime
 
-from latest_ai_dev.crew import LatestAiDev
+from my_crew.crew import MyCrew
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
@@ -18,12 +18,12 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'AI Agents',
+        'topic': 'AI LLMs',
         'current_year': str(datetime.now().year)
     }
 
     try:
-        LatestAiDev().crew().kickoff(inputs=inputs)
+        MyCrew().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
 
@@ -33,11 +33,11 @@ def train():
     Train the crew for a given number of iterations.
     """
     inputs = {
-        "topic": "AI Agent",
+        "topic": "AI LLMs",
         'current_year': str(datetime.now().year)
     }
     try:
-        LatestAiDev().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
+        MyCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
 
     except Exception as e:
         raise Exception(f"An error occurred while training the crew: {e}")
@@ -47,7 +47,7 @@ def replay():
     Replay the crew execution from a specific task.
     """
     try:
-        LatestAiDev().crew().replay(task_id=sys.argv[1])
+        MyCrew().crew().replay(task_id=sys.argv[1])
 
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")
@@ -62,7 +62,7 @@ def test():
     }
 
     try:
-        LatestAiDev().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
+        MyCrew().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
 
     except Exception as e:
         raise Exception(f"An error occurred while testing the crew: {e}")
@@ -88,7 +88,7 @@ def run_with_trigger():
     }
 
     try:
-        result = LatestAiDev().crew().kickoff(inputs=inputs)
+        result = MyCrew().crew().kickoff(inputs=inputs)
         return result
     except Exception as e:
         raise Exception(f"An error occurred while running the crew with trigger: {e}")

@@ -1,14 +1,13 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
-from crewai_tools import SerperDevTool
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
 @CrewBase
-class LatestAiDev():
-    """LatestAiDev crew"""
+class MyCrew():
+    """MyCrew crew"""
 
     agents: list[BaseAgent]
     tasks: list[Task]
@@ -23,8 +22,7 @@ class LatestAiDev():
     def researcher(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True,
-            tools=[SerperDevTool()]
+            verbose=True
         )
 
     @agent
@@ -52,7 +50,7 @@ class LatestAiDev():
 
     @crew
     def crew(self) -> Crew:
-        """Creates the LatestAiDev crew"""
+        """Creates the MyCrew crew"""
         # To learn how to add knowledge sources to your crew, check out the documentation:
         # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
