@@ -1,9 +1,17 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+
+import os
+ # Make sure to set your environment variables in the .env file in the root of the project
+print("Loading environment variables...", os.getenv("OPENAI_MODEL_NAME"))
+
+llm = LLM(model=os.getenv("OPENAI_MODEL_NAME"),
+    base_url=os.getenv("OPENAI_API_BASE"),
+    api_key=os.getenv("OPENAI_API_KEY"),) # You can set the model for your crew here, or in the YAML configuration files for each agent and task
 
 @CrewBase
 class MyCrew():
@@ -22,14 +30,16 @@ class MyCrew():
     def researcher(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'], # type: ignore[index]
-            verbose=True
+            verbose=True,
+            llm=llm
         )
 
     @agent
     def reporting_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['reporting_analyst'], # type: ignore[index]
-            verbose=True
+            verbose=True,
+            llm=llm
         )
 
     # To learn more about structured task outputs,
